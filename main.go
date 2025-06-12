@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	grafana "github.com/grafana/grafana-api-golang-client"
@@ -81,12 +80,6 @@ func updateAlertRule2Http(c *gin.Context) {
 }
 
 func main() {
-	// WEBHOOK_URL 从命令行参数读取
-	if len(os.Args) < 2 {
-		log.Fatal("请提供 WEBHOOK_URL 参数")
-	}
-	WEBHOOK_URL = os.Args[1]
-
 	Client, _ = createGrafanaClient()
 
 	// 确保Webhook通知渠道存在

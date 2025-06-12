@@ -1,0 +1,47 @@
+# alert-adaptor-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-adaptor-deployment
+  labels:
+    app: alert-adaptor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-adaptor
+  template:
+    metadata:
+      labels:
+        app: alert-adaptor
+    spec:
+      containers:
+      - name: alert-adaptor
+        image: jos-alert:1.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: WEBHOOK
+          value: "http://10.67.126.71:8080"  # 设置实际的Webhook URL
+        ports:
+        - containerPort: 8080       # 容器工作端口
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+# alert-adaptor-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-adaptor-service
+spec:
+  selector:
+    app: alert-adaptor
+  ports:
+    - protocol: TCP
+      port: 80          # Service对外端口
+      targetPort: 8080  # Pod内部端口
+  type: ClusterIP    # 可选类型：ClusterIP/NodePort/LoadBalancer

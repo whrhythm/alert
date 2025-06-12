@@ -97,9 +97,9 @@ livenessProbe:
 
 image:
   # -- The Docker registry
-  registry: docker.io
+  registry: harbor.joiningos.com
   # -- Docker image repository
-  repository: grafana/grafana
+  repository: library/grafana
   # Overrides the Grafana image tag whose default is the chart appVersion
   tag: ""
   sha: ""

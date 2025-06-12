@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	grafana "github.com/grafana/grafana-api-golang-client"
 )
 
@@ -34,6 +36,7 @@ func createWebhookContactPoint(client *grafana.Client) (string, error) {
 	// }`
 
 	// 创建通知渠道配置
+	WEBHOOK_URL := os.Getenv("WEBHOOK")
 	contactPoint := grafana.ContactPoint{
 		Name:     "Webhook",
 		Type:     "webhook",
